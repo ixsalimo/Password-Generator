@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://s25.picofile.com/file/8450374134/Reload_Compressed.png">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="./CSS/reset.css">
+    <script src="https://kit.fontawesome.com/917407b9f0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./CSS/style.css">
+</head>
+<body>
+    <header id="navigation">
+        <nav>
+            <h1 id="title">Password Generator</h1>
+            <div id="menu" title="Saved Passwords" data-openclose="close"><span id="line-1" class="menu-line"></span><span id="line-2" class="menu-line"></span><span id="line-3" class="menu-line"></span></div>
+        </nav>
+    </header>
+    <div id="hidden-navigation"></div>
+    <section id="main-page">
+        <header id="clock-date">
+            <p id="date-txt"></p>
+            <p id="clock-txt"></p>
+        </header>
+        <main id="inputs">
+            <input class="password-inputs" type="text" id="password-name" placeholder="Title">
+            <p id="name-error" class="error">Type Password Title</p>
+            <input class="password-inputs" type="number" id="password-length" placeholder="length" list="password-security">
+            <p id="length-error" class="error">Type Password Length</p>
+            <datalist id="password-security">
+                <option value="4">Low</option>
+                <option value="8">Medium</option>
+                <option value="16">High</option>
+                <option value="256">Strong</option>
+            </datalist>
+            <article class="option-box">
+                <div>
+                    <input type="checkbox" id="upper">
+                    <label for="upper">Upper</label>
+                </div>
+                <label for="upper">
+                    <p id="upper-preview" class="preview-txt"><span>(</span>&nbsp;ABCDEFGHIJKLMNOPQRSTUVWXYZ&nbsp;<span>)</span></p>
+                </label>
+            </article>
+            <article class="option-box">
+                <div>
+                    <input type="checkbox" id="lower">
+                    <label for="lower">Lower</label>
+                </div>
+                <label for="lower">
+                    <p id="lower-preview" class="preview-txt"><span>(</span>&nbsp;abcdefghijklmnopqrstuvwxyz&nbsp;<span>)</span></p>
+                </label>
+            </article>
+            <article class="option-box">
+                <div>
+                    <input type="checkbox" id="symbol">
+                    <label for="symbol">Symbol</label>
+                </div>
+                <label for="symbol">
+                    <p id="symbol-preview" class="preview-txt"><span>(</span>&nbsp;:;`~!@#$%^&*()_-+=\|{}[]<.>,?/'&nbsp;<span>)</span></p>
+                </label>
+            </article>
+            <article class="option-box">
+                <div>
+                    <input type="checkbox" id="number">
+                    <label for="number">Number</label>
+                </div>
+                <label for="number">
+                    <p id="number-preview" class="preview-txt"><span>(</span>&nbsp;0123456789&nbsp;<span>)</span></p>
+                </label>
+            </article>
+            <article class="option-box">
+                <div>
+                    <input type="checkbox" id="space">
+                    <label for="space">Space</label>
+                </div>
+                <label for="space">
+                    <p id="space-preview" class="preview-txt"><span>(</span>&nbsp;&nbsp;<span>)</span></p>
+                </label>
+            </article>
+            <div id="select-clear-all-box">
+                <button id="select-all-btn" class="inactive">Select All</button>
+                <button id="clear-all-btn" class="inactive">Clear All</button>
+            </div>
+        </main>
+        <article id="generated-password-box">
+            <input type="password" id="generated-password" class="inactive-btn" disabled>
+            <button id="save-password" class="btn active-btn">Save</button>
+        </article>
+        <p id="alerts" class="alert"></p>
+        <footer id="options">
+            <button id="show-password" class="btn inactive-btn">Show</button>
+            <button id="create-password" class="btn inactive-btn">Create</button>
+            <button id="copy-password" class="btn inactive-btn">Copy</button>
+        </footer>
+    </section>
+    <section id="passwords-page"></section>
+    <footer id="credit">Created with &#10084;&#65039; by&nbsp;<a href="https://github.com/ixsalimo" target="_blank" title="ixsalimo's github page">ixsalimo</a></footer>
+    <script src="./script.js"></script>
+</body>
+</html>
