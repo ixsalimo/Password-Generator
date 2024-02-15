@@ -3,6 +3,7 @@
 Simple password generator made by pure JavaScript
 ## Features
 
+- Responsive 📱
 - Friendly UI & UX 💜
 - Save passwords locally ✅
 - Customizable *(title, length, parameters)* ♻
