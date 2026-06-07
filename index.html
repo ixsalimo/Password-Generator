@@ -9,9 +9,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon-16x16.png">
     <title>Password Generator</title>
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/main.js" defer></script>
+    <script src="./src/ts/main.ts" type="module" defer></script>
 </head>
 <body>
     <header>
@@ -67,7 +65,7 @@
                         <input type="checkbox" name="symbols" id="symbols">
                         <span>Symbols</span>
                     </label>
-                    <p>!@#$%^&*()-_+=[]{}|;:'",.<>/?~</p>
+                    <p>!@#$%^&*()-_+=[]{}|;:'",.&lt;&gt;/?~</p>
                 </section>
                 <section class="characters">
                     <label for="space">
@@ -81,13 +79,20 @@
                         <input type="checkbox" name="all" id="all">
                         <span>Select All</span>
                     </label>
-                    <p></p>
                 </section>
             </section>
         </main>
-        <section id="generated-password-box" class="container">
-            <input type="password" id="generated-password" disabled>
-            <button id="save-password-btn" class="btn hidden">Save</button>
+        <section id="generated-password-box-container" class="container">
+            <section id="generated-password-box">
+                <input type="password" id="generated-password" disabled>
+                <button id="save-password-btn" class="btn hidden">Save</button>
+            </section>
+            <section id="password-strength-container" class="hidden">
+                <section id="password-strength-bar-container">
+                    <div id="password-strength-bar"></div>
+                </section>
+                <p id="password-strength-level"></p>
+            </section>
         </section>
         <p id="alerts" class="hidden"></p>
         <section id="action-buttons" class="container">
@@ -97,8 +102,33 @@
         </section>
     </main>
     <main id="saved-passwords-page" class="hidden">
+        <section id="saved-passwords-actions-container" class="container">
+            <input type="search" name="search-passwords" id="search-passwords" placeholder="Search Passwords...">
+            <section id="saved-passwords-backup-buttons">
+                <label id="import-passwords-btn" class="btn" for="import-passwords">
+                    Import
+                    <input type="file" name="import-passwords-file" id="import-passwords" class="hidden" accept=".json">
+                </label>
+                <button id="export-passwords-btn" class="btn">Export</button>
+            </section>
+        </section>
         <section id="saved-passwords"></section>
     </main>
     <footer>Created with 💚 by <a href="https://github.com/ixsalimo" target="_blank" title="ixsalimo's github page">ixsalimo</a></footer>
+    <section id="modal-backdrop" class="modal-backdrop hidden">
+        <section id="modal" class="modal" role="dialog" aria-modal="true">
+            <section class="modal-header">
+                <h3 id="modal-title"></h3>
+            </section>
+            <section class="modal-body">
+                <p id="modal-message"></p>
+                <input id="modal-input" type="text" class="hidden">
+            </section>
+            <section class="modal-footer">
+                <button id="modal-cancel" type="button">Cancel</button>
+                <button id="modal-confirm" type="button">Confirm</button>
+            </section>
+        </section>
+    </section>
 </body>
 </html>
