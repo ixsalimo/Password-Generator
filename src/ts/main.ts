@@ -171,6 +171,23 @@ function showAlert (text : string , mode : "success" | "error" = "success") {
 
 }
 
+/**
+ * Generates a cryptographically secure random integer between `0` (inclusive) and `max` (exclusive)
+ */
+function getRandomSecureNumber (max : number) {
+
+    if (typeof max === "number" && max > 0) {
+
+        const Uint32 = new Uint32Array(1);
+    
+        window.crypto.getRandomValues(Uint32);
+    
+        return Uint32[0] % max;
+
+    } else return 0;
+
+}
+
 function shuffle (input : string) : string | null;
 function shuffle<T> (input : Array<T>) : Array<T> | null;
 function shuffle<T> (input : string | Array<T>) : string | Array<T> | null {
@@ -178,11 +195,11 @@ function shuffle<T> (input : string | Array<T>) : string | Array<T> | null {
     if (input?.length) {
 
         let shuffledInput = [...(typeof input === "string" ? input.split('') : input)];
-        let randomIndex;
+        let randomIndex : number | undefined;
 
         for (let i = shuffledInput.length - 1; i > 0; i--) {
             
-            randomIndex = Math.floor(Math.random() * (i + 1));
+            randomIndex = getRandomSecureNumber(i + 1);
 
             [ shuffledInput[i] , shuffledInput[randomIndex] ] = [ shuffledInput[randomIndex] , shuffledInput[i] ];
             
@@ -197,7 +214,7 @@ function shuffle<T> (input : string | Array<T>) : string | Array<T> | null {
 function getRandom (input : string) : string | null;
 function getRandom<T> (input : Array<T>) : T | null;
 function getRandom<T> (input : string | Array<T>) : string | T | null {
-    return input ? input[Math.floor(Math.random() * input.length)] : null;
+    return input?.length ? input[getRandomSecureNumber(input.length)] : null;
 }
 
 function calculatePasswordEntropy (charactersContainerLength : number , passwordLength : number) {
