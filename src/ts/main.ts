@@ -16,7 +16,7 @@ const SearchPasswordsInput             = document.querySelector<HTMLInputElement
 const ImportPasswordsInput             = document.querySelector<HTMLInputElement & { type : "file" }>("input#import-passwords");
 const ExportPasswordsButton            = document.querySelector<HTMLButtonElement>("#export-passwords-btn");
 const SavedPasswordsSection            = document.getElementById("saved-passwords");
-const PasswordNameInput                = document.querySelector<HTMLInputElement>("input#password-name");
+const PasswordTitleInput               = document.querySelector<HTMLInputElement>("input#password-title");
 const PasswordLengthInput              = document.querySelector<HTMLInputElement>("input#password-length");
 const PasswordCharactersCheckboxes     = [...document.querySelectorAll<HTMLInputElement>("#password-characters input[type='checkbox']:not([name='all'])")];
 const SelectAllCharactersCheckbox      = document.querySelector<HTMLInputElement>("#password-characters input[name='all']");
@@ -368,8 +368,8 @@ SavePasswordButton?.addEventListener("click" ,
                 createdAt: new Date().toISOString()
             };
     
-            if (PasswordNameInput?.value)
-                NewPassword.title = PasswordNameInput.value.trim();
+            if (PasswordTitleInput?.value)
+                NewPassword.title = PasswordTitleInput.value.trim();
             
             SavedPasswords.push(NewPassword);
             
