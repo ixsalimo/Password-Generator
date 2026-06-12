@@ -18,8 +18,9 @@ const ExportPasswordsButton            = document.querySelector<HTMLButtonElemen
 const SavedPasswordsSection            = document.getElementById("saved-passwords");
 const PasswordTitleInput               = document.querySelector<HTMLInputElement>("input#password-title");
 const PasswordLengthInput              = document.querySelector<HTMLInputElement>("input#password-length");
-const PasswordCharactersCheckboxes     = [...document.querySelectorAll<HTMLInputElement>("#password-characters input[type='checkbox']:not([name='all'])")];
+const PasswordCharactersCheckboxes     = [...document.querySelectorAll<HTMLInputElement>("#password-characters input[type='checkbox']:not([name='all'] , [name='exclude-ambiguous'])")];
 const SelectAllCharactersCheckbox      = document.querySelector<HTMLInputElement>("#password-characters input[name='all']");
+const ExcludeAmbiguousCheckbox         = document.querySelector<HTMLInputElement>("input#exclude-ambiguous");
 const GeneratedPasswordInput           = document.querySelector<HTMLInputElement>("#generated-password");
 const PasswordStrengthContainer        = document.getElementById("password-strength-container");
 const PasswordStrengthBar              = document.getElementById("password-strength-bar");
@@ -264,7 +265,7 @@ function getPasswordStrengthByEntropy (passwordEntropy : number) {
 
 }
 
-function generatePassword (length = 16 , { uppers = true , lowers = true , numbers = true , symbols = false , space = false } : Partial<{
+function generatePassword (length = 16 , { uppers = true , lowers = true , numbers = true , symbols = false , space = false , excludeAmbiguous = false } : Partial<{
     /** *(Default: `true`)* */
     uppers : boolean;
     /** *(Default: `true`)* */
@@ -275,16 +276,18 @@ function generatePassword (length = 16 , { uppers = true , lowers = true , numbe
     symbols : boolean;
     /** *(Default: `false`)* */
     space : boolean;
+    /** *(Default: `false`)* */
+    excludeAmbiguous : boolean;
 }> = {}) {
 
     if (typeof length === "number" && length) {
 
-        const Uppers                               = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const Lowers                               = Uppers.toLowerCase();
-        const Numbers                              = "0123456789";
-        const Symbols                              = "!@#$%^&*()-_+=[]{}|;:'\",.<>/?~";
-        const CharacterSets : Array<string> = [];
-        const PasswordCharacters : Array<string>   = [];
+        const Uppers                             = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const Lowers                             = Uppers.toLowerCase();
+        const Numbers                            = "0123456789";
+        const Symbols                            = "!@#$%^&*()-_+=[]{}|;:'\",.<>/?~";
+        const CharacterSets : Array<string>      = [];
+        const PasswordCharacters : Array<string> = [];
 
         if (uppers)
             CharacterSets.push(Uppers);
@@ -300,6 +303,10 @@ function generatePassword (length = 16 , { uppers = true , lowers = true , numbe
         
         if (space)
             CharacterSets.push(' ');
+
+        if (excludeAmbiguous)
+            for (let i = 0; i < CharacterSets.length; i++)
+                CharacterSets[i] = CharacterSets[i].replace(/[o0O|LIl1i]/g , '');
 
         if (CharacterSets.length) {
 
@@ -386,7 +393,10 @@ CreatePasswordButton?.addEventListener("click" ,
     function () {
 
         const PasswordLength    = Number(PasswordLengthInput?.value || 16);
-        const GeneratedPassword = generatePassword(PasswordLength , Object.fromEntries(PasswordCharactersCheckboxes.map(checkbox => [checkbox.name , checkbox.checked])));
+        const GeneratedPassword = generatePassword(PasswordLength , {
+            ...Object.fromEntries(PasswordCharactersCheckboxes.map(checkbox => [checkbox.name , checkbox.checked])),
+            excludeAmbiguous: ExcludeAmbiguousCheckbox?.checked ?? false
+        });
 
         if (GeneratedPassword) {
 
